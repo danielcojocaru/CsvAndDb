@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IMDWHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Time">
+          <Key>
+            <PropertyRef Name="IdTime" />
+          </Key>
+          <Property Name="IdTime" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Quarter" Type="int" />
+          <Property Name="MonthNumberYear" Type="int" />
+          <Property Name="WeekNumberOfYear" Type="int" />
+          <Property Name="DayNumberOfYear" Type="int" />
+          <Property Name="DayNumberOfMonth" Type="int" />
+          <Property Name="DayNumberOfWeek" Type="int" />
+          <Property Name="MonthName" Type="nvarchar" MaxLength="30" />
+          <Property Name="DayName" Type="nvarchar" MaxLength="30" />
+          <Property Name="HolidayGermany" Type="bit" />
+          <Property Name="BankDay" Type="bit" />
+          <Property Name="isUltimo" Type="bit" />
+          <Property Name="DateTimeCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateTimeUpdated" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsLeapYear" Type="bit" />
+          <Property Name="IsLastDayOfYear" Type="bit" />
+          <Property Name="IsLastDayOfMonth" Type="bit" />
+        </EntityType>
+        <EntityContainer Name="IMDWHModelStoreContainer">
+          <EntitySet Name="Time" EntityType="Self.Time" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IMDWHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Time">
+          <Key>
+            <PropertyRef Name="IdTime" />
+          </Key>
+          <Property Name="IdTime" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Quarter" Type="Int32" />
+          <Property Name="MonthNumberYear" Type="Int32" />
+          <Property Name="WeekNumberOfYear" Type="Int32" />
+          <Property Name="DayNumberOfYear" Type="Int32" />
+          <Property Name="DayNumberOfMonth" Type="Int32" />
+          <Property Name="DayNumberOfWeek" Type="Int32" />
+          <Property Name="MonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DayName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="HolidayGermany" Type="Boolean" />
+          <Property Name="BankDay" Type="Boolean" />
+          <Property Name="isUltimo" Type="Boolean" />
+          <Property Name="DateTimeCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTimeUpdated" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsLeapYear" Type="Boolean" />
+          <Property Name="IsLastDayOfYear" Type="Boolean" />
+          <Property Name="IsLastDayOfMonth" Type="Boolean" />
+        </EntityType>
+        <EntityContainer Name="IMDWHEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Time" EntityType="Self.Time" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IMDWHModelStoreContainer" CdmEntityContainer="IMDWHEntities">
+          <EntitySetMapping Name="Time">
+            <EntityTypeMapping TypeName="IMDWHModel.Time">
+              <MappingFragment StoreEntitySet="Time">
+                <ScalarProperty Name="IdTime" ColumnName="IdTime" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="MonthNumberYear" ColumnName="MonthNumberYear" />
+                <ScalarProperty Name="WeekNumberOfYear" ColumnName="WeekNumberOfYear" />
+                <ScalarProperty Name="DayNumberOfYear" ColumnName="DayNumberOfYear" />
+                <ScalarProperty Name="DayNumberOfMonth" ColumnName="DayNumberOfMonth" />
+                <ScalarProperty Name="DayNumberOfWeek" ColumnName="DayNumberOfWeek" />
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+                <ScalarProperty Name="DayName" ColumnName="DayName" />
+                <ScalarProperty Name="HolidayGermany" ColumnName="HolidayGermany" />
+                <ScalarProperty Name="BankDay" ColumnName="BankDay" />
+                <ScalarProperty Name="isUltimo" ColumnName="isUltimo" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="DateTimeUpdated" ColumnName="DateTimeUpdated" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsLeapYear" ColumnName="IsLeapYear" />
+                <ScalarProperty Name="IsLastDayOfYear" ColumnName="IsLastDayOfYear" />
+                <ScalarProperty Name="IsLastDayOfMonth" ColumnName="IsLastDayOfMonth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
