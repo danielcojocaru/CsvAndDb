@@ -26,6 +26,7 @@ namespace CsvAndDb
 
         private void B1_CopyAllLinesFromFileToNewFile_Click(object sender, EventArgs e)
         {
+            //string a = DateTime.Now.ToString("yyyyMMdd HH.mm.ss");
 
             using (var reader = new StreamReader(@"C:\Users\daniel.cojocaru\Desktop\Deka\Errors\WAER\1.txt", this.Encoding, true))
             {
@@ -87,9 +88,9 @@ namespace CsvAndDb
         private void B3_FindValueInFiles_Click(object sender, EventArgs e)
         {
             // input
-            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Errors\ASD";
-            int columnIndex = 0;
-            IList<string> searchedValues = new List<string>() { "1030781" };
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\2) Täglicher Betrieb";
+            int columnIndex = -1;
+            IList<string> searchedValues = new List<string>() { "FileName" };
             char spliter = '|';
 
             string[] allFilesPaths = Directory.GetFiles(sourcePath);
@@ -106,7 +107,18 @@ namespace CsvAndDb
                         string currentLine = reader.ReadLine();
                         string[] splitedLine = currentLine.Split(spliter);
 
-                        if (searchedValues.Contains(splitedLine[columnIndex]))
+                        if (columnIndex < 0)
+                        {
+                            foreach (string split in splitedLine)
+                            {
+                                if (searchedValues.Contains(split))
+                                {
+                                    string fileName = Path.GetFileName(filePath);
+                                    MessageBox.Show("Found it!" + Environment.NewLine + fileName + " >> Line nr = " + lineNr);
+                                }
+                            }
+                        }
+                        else if (searchedValues.Contains(splitedLine[columnIndex]))
                         {
                             string fileName = Path.GetFileName(filePath);
                             MessageBox.Show("Found it!" + Environment.NewLine + fileName + " >> Line nr = " + lineNr);
@@ -115,6 +127,7 @@ namespace CsvAndDb
                 }
             }
         }
+
 
         private static void MessageBoxFoundIt(string filePath, double lineNr)
         {
@@ -125,17 +138,28 @@ namespace CsvAndDb
         private void B4_FindValuesInMultipleColumns_Click(object sender, EventArgs e)
         {
             //input ALD 
-            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Deka Produktiv\TAD";
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\2) Täglicher Betrieb";
+            string filePattern = "LOT";
             char spliter = '|';
             IDictionary<int, string> searched = new Dictionary<int, string>()
             {
-                { 12, "15695961" },
-                //{ 3, "1020601" },
-                //{ 2, "150" },
+                { 0, "20180102" },
+                //{ 1, "10458" },
+                //{ 2, "1003341" },
                 //{ 3, "2129047" },
             };
 
-            string[] allFilesPaths = Directory.GetFiles(sourcePath);
+            string[] allFilesPaths;
+            if (filePattern == null)
+            {
+                allFilesPaths = Directory.GetFiles(sourcePath);
+            }
+            else
+            {
+                allFilesPaths = Directory.GetFiles(sourcePath, "*" + filePattern + "*");
+            }
+            
+
             foreach (string filePath in allFilesPaths)
             {
                 double lineNr = 0;
@@ -157,6 +181,132 @@ namespace CsvAndDb
                     }
                 }
             }
+        }
+
+        private void B16_CheckColumnNamesInFiles_Click(object sender, EventArgs e)
+        {
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\2) Täglicher Betrieb";
+            //char spliter = '|';
+
+            string AKT = "DATUM|FONDSID|FINAL";
+            string ALD = "FONDSID|TRANCHENID|DATUM|ANLEGERID|ANLEGER|ANTEILE_TRANCHE|QUOTE_TRANCHE|QUOTE_FONDS|NAHERSTEHENDE_PERSON|GLOBAL";
+            string ASD = "ANLAGEID|DATUM|ISIN|SCD_SECID|WAEHRUNG|WKNTEXT";
+            string DIV = "AUFTRAGSNUMMER|FONDSID|ANLAGEID|GESCHAEFTSNUMMER|STORNOSTATUS|EXTAG|DATUM|NOMINALSTUECK|AUSMACHENDERBETRAG|AUSMACHENDERBETRAG_WAEHRUNG|DEVISENKURS_ABR|DIVIDENDE100|DIVIDENDE_PRO_STUECK|DIVIDENDE_WAEHRUNG|KEST_BETRAG";
+            string FSD = "FONDSID|TRANCHENID|DATUM|ISIN|SCD_FONDSID|SCD_TRANCHEID|FONDSNAME|RECHENSCHAFTSBERICHT|KAGID|VERWAHRSTELLENKUERZEL|KAG|HIERARCHIETYP|FONDSWAEHRUNG|AUFLEGUNG|AUFLOESUNG|FONDSKATEGORIE|SORTENREIN|TRANSPARENZOPTION|INVESTMENTFONDS|FONDSKURZNAME";
+            string FTK = "FONDSID|TRANCHENID|DATUM|ANTEILEUMLAUF|TRANCHENVERMOEGEN|FONDSVERMOEGEN|TRANCHENRATIO|EURO_KURS";
+            string LOT = "DATUM|GESCHAEFTSNR|FONDSID|ANLAGEID|STUECKE_GESAMT|STUECKE_KAUF|STUECKE_LOT|HANDELSTAG|HALTEDAUER";
+            string MCH = "FONDSID|ANLAGEID|GESCHAEFTSNR|LIEFERDATUM|EXTAG|MICRO_HEDGE|GUELTIGBIS|HANDELSDATUM";
+            string NAH = "QUELLE|DATUM|ISIN|FONDSID|TRANCHENID|ANTEILE|MARKTWERT|WAEHRUNG|QUOTE_TRANCHE|QUOTE_FONDS|ANLEGER|NAHESTEHENDE_PERSON|GLOBAL";
+            string TAD = "V3BEWEGUNGSARTID|NAME_ELMGA|NAME_GA|DATUM|HANDELSDATUM|FONDSID|ANLAGEID|STORNOSTATUSID|NOMINALSTUECK|VERHAELTNIS|AUSWIRKUNG|AUFTRAGSNR|GESCHAEFTSNR";
+            string WAER = "DATUM|FONDSID|ANLAGEID|MARKTWERT|EXPOSURE|WAER";
+
+            Dictionary<FileTypeEnum, string> dictionary = new Dictionary<FileTypeEnum, string>()
+            {
+                {FileTypeEnum.AKT , AKT  },
+                {FileTypeEnum.ALD , ALD  },
+                {FileTypeEnum.ASD , ASD  },
+                {FileTypeEnum.DIV , DIV  },
+                {FileTypeEnum.FSD , FSD  },
+                {FileTypeEnum.FTK , FTK  },
+                {FileTypeEnum.LOT , LOT  },
+                {FileTypeEnum.MCH , MCH  },
+                {FileTypeEnum.NAH , NAH  },
+                {FileTypeEnum.TAD , TAD  },
+                {FileTypeEnum.WAER, WAER },
+            };
+
+            string[] allFilesPaths = Directory.GetFiles(sourcePath);
+
+            foreach (string filePath in allFilesPaths)
+            {
+                string fileName = Path.GetFileName(filePath);
+                FileTypeEnum fileType = GetFileTypeFromPathFile(filePath);
+                string firstLineShouldBe = dictionary[fileType];
+
+                using (var reader = new StreamReader(filePath, this.Encoding, true))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        string currentLine = reader.ReadLine();
+                        if (!currentLine.Equals(firstLineShouldBe))
+                        {
+                            Console.WriteLine(fileName);
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        private FileTypeEnum GetFileTypeFromPathFile(string filePath)
+        {
+            string fileName = Path.GetFileName(filePath);
+
+            if (fileName.Contains(FileTypeEnum.AKT.ToString()))
+            {
+                return FileTypeEnum.AKT;
+            }
+            else if (fileName.Contains(FileTypeEnum.ALD.ToString()))
+            {
+                return FileTypeEnum.ALD;
+            }
+            else if (fileName.Contains(FileTypeEnum.ASD.ToString()))
+            {
+                return FileTypeEnum.ASD;
+            }
+            else if (fileName.Contains(FileTypeEnum.DIV.ToString()))
+            {
+                return FileTypeEnum.DIV;
+            }
+            else if (fileName.Contains(FileTypeEnum.FSD.ToString()))
+            {
+                return FileTypeEnum.FSD;
+            }
+            else if (fileName.Contains(FileTypeEnum.FTK.ToString()))
+            {
+                return FileTypeEnum.FTK;
+            }
+            else if (fileName.Contains(FileTypeEnum.LOT.ToString()))
+            {
+                return FileTypeEnum.LOT;
+            }
+            else if (fileName.Contains(FileTypeEnum.MCH.ToString()))
+            {
+                return FileTypeEnum.MCH;
+            }
+            else if (fileName.Contains(FileTypeEnum.NAH.ToString()))
+            {
+                return FileTypeEnum.NAH;
+            }
+            else if (fileName.Contains(FileTypeEnum.TAD.ToString()))
+            {
+                return FileTypeEnum.TAD;
+            }
+            else if (fileName.Contains(FileTypeEnum.WAER.ToString()))
+            {
+                return FileTypeEnum.WAER;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+
+        public enum FileTypeEnum
+        {
+            AKT,
+            ALD,
+            ASD,
+            DIV,
+            FSD,
+            FTK,
+            LOT,
+            MCH,
+            NAH,
+            TAD,
+            WAER
         }
 
         private bool MatchesValues(IDictionary<int, string> searched, string[] splitedLine)
@@ -222,56 +372,10 @@ namespace CsvAndDb
             }
         }
 
-        private void B6_FindValuesAndDelete_Click(object sender, EventArgs e)
-        {
-            string defaultValueOnNull = "20171231";
-            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Errors\LOT\Bad";
-            string targetPath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Errors\LOT\Good";
-            int columnIndex = 1;
-            string searched = "0";
-            char spliter = '|';
-
-            IList<string> badFiles = new List<string>();
-
-            string[] allFilesPaths = Directory.GetFiles(sourcePath);
-            foreach (string filePath in allFilesPaths)
-            {
-                using (var reader = new StreamReader(filePath, this.Encoding, true))
-                {
-                    bool fileIsValid = true;
-                    string fileName = Path.GetFileName(filePath);
-
-                    string targetFile = targetPath + "\\" + fileName;
-                    using (StreamWriter writer = new StreamWriter(targetFile, true, this.Encoding))
-                    {
-                        while (!reader.EndOfStream)
-                        {
-                            string currentLine = reader.ReadLine();
-                            string[] splitedLine = currentLine.Split(spliter);
-
-                            if (string.IsNullOrEmpty(splitedLine[columnIndex]) || splitedLine[columnIndex].Equals(searched))
-                            {
-                                fileIsValid = false;
-                                splitedLine[columnIndex] = defaultValueOnNull;
-                            }
-
-                            string correctedLine = string.Join(spliter.ToString(), splitedLine);
-                            writer.WriteLine(correctedLine);
-                        }
-                    }
-
-                    if (!fileIsValid)
-                    {
-                        badFiles.Add(fileName);
-                    }
-                }
-            }
-        }
-
         private void B7_ReplaceInColumns_Click(object sender, EventArgs e)
         {
-            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Errors\WAER\Bad";
-            string targetPath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Errors\WAER\Good";
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\Bad";
+            string targetPath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\Good";
             IList<int> columnIndexes = new List<int>() { 3, 4, 5 };
             string searched = ",";
             string replace = ".";
@@ -301,6 +405,215 @@ namespace CsvAndDb
                             writer.WriteLine(correctedLine);
                         }
                     }
+                }
+            }
+        }
+
+
+        private void B15_SearchRueckwirkendeAenderungen_Click(object sender, EventArgs e)
+        {
+            //DateTime date1 = DateTime.ParseExact("20180119", "yyyyMMdd", CultureInfo.InvariantCulture);
+            //DateTime date2 = Repo.GetWorkingDateAfter(date1);
+            //DateTime date3 = Repo.GetWorkingDateBefore(date1);
+
+
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\2) Täglicher Betrieb";
+            string searching = "DATUM";
+            char spliter = '|';
+
+            DateTime middleDay = DateTime.ParseExact("20180101", "yyyyMMdd", CultureInfo.InvariantCulture);
+            List<Time> timesForWorkingDateBefore = Repo.GetWorkingDaysBetween(middleDay.AddDays(-400), middleDay.AddDays(400)).OrderByDescending(t => t.Date).ToList();
+
+
+            string[] files = Directory.GetFiles(sourcePath);
+            foreach (string filePath in files)
+            {
+                DateTime dateOfFile = GetDateFromDekaFilePath(filePath);
+                //DateTime startWith = DateTime.ParseExact("20180122", "yyyyMMdd", CultureInfo.InvariantCulture);
+
+                //if (dateOfFile < startWith)
+                //{
+                //    continue;
+                //}
+
+                if (dateOfFile.Year < 2018)
+                {
+                    continue;
+                }
+
+                using (var reader = new StreamReader(filePath, this.Encoding, true))
+                {
+                    int lineNr = -1;
+                    int indexOfDate = -1;
+                    while (!reader.EndOfStream)
+                    {
+                        lineNr++;
+                        string currentLine = reader.ReadLine();
+                        string[] splitedLine = currentLine.Split(spliter);
+
+                        if (lineNr == 0)
+                        {
+                            for (int i = 0; i < splitedLine.Length; i++)
+                            {
+                                string spl = splitedLine[i];
+                                if (spl.Equals(searching))
+                                {
+                                    indexOfDate = i;
+                                    break;
+                                }
+                            }
+
+                            if (indexOfDate == -1)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            string dateAsString = splitedLine[indexOfDate];
+                            DateTime dateFound = DateTime.ParseExact(dateAsString, "yyyyMMdd", CultureInfo.InvariantCulture);
+
+                            DateTime shouldBe = Repo.GetWorkingDateBefore(dateOfFile, timesForWorkingDateBefore);
+
+                            if (dateFound != shouldBe)
+                            {
+                                string fileName = Path.GetFileName(filePath);
+
+
+                                bool a = false;
+
+                                break;
+                                //MessageBox.Show("Found it!" + Environment.NewLine + fileName + " >> Line nr = " + lineNr);
+
+
+                            }
+                        }
+
+                        
+                        
+
+                    }
+                }
+            }
+
+        }
+
+
+        private DateTime GetDateFromDekaFilePath(string file)
+        {
+            string fileName = Path.GetFileName(file);
+            string firstSplit = fileName.Split(new string[] { ".txt" }, StringSplitOptions.None)[0];
+            string[] secondSplitArray = firstSplit.Split('_');
+            string secondSplit = secondSplitArray[secondSplitArray.Length - 1];
+            string dateAsString = secondSplit.Substring(0, 8);
+            DateTime date = DateTime.ParseExact(dateAsString, "yyyyMMdd", CultureInfo.InvariantCulture);
+            return date;
+        }
+
+        private void B7Prime_DeleteColumnsAfterIndex_Click(object sender, EventArgs e)
+        {
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\Bad";
+            string targetPath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\Good";
+            int maxIndex = 14;
+            char spliter = '|';
+
+            string[] allFilesPaths = Directory.GetFiles(sourcePath);
+            foreach (string filePath in allFilesPaths)
+            {
+                using (var reader = new StreamReader(filePath, this.Encoding, true))
+                {
+                    string fileName = Path.GetFileName(filePath);
+
+                    string targetFile = targetPath + "\\" + fileName;
+                    using (StreamWriter writer = new StreamWriter(targetFile, true, this.Encoding))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            string currentLine = reader.ReadLine();
+                            string[] splitedLine = currentLine.Split(spliter);
+                            string[] newLine = new string[maxIndex + 1];
+
+                            for (int i = 0; i < maxIndex + 1; i++)
+                            {
+                                newLine[i] = splitedLine[i];
+                            }
+
+                            string correctedLine = string.Join(spliter.ToString(), newLine);
+                            writer.WriteLine(correctedLine);
+                        }
+                    }
+                }
+            }
+        }
+
+        DateTime MaxDate;
+        DateTime MinDate;
+
+        private void B9Prime_SortFilesByDate_Click(object sender, EventArgs e)
+        {
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\2) Täglicher Betrieb";
+            string targetPath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\2) Täglicher Betrieb - Sorted";
+
+            string[] allFilesPaths = Directory.GetFiles(sourcePath);
+
+            SetMinDateAndMaxDate(allFilesPaths);
+            List<Time> workingDates = Repo.GetWorkingDaysBetween(MinDate, MaxDate);
+
+            foreach (Time day in workingDates)
+            {
+                string date = day.Date.Value.ToString("yyyyMMdd");
+                string newFolder = targetPath + @"\" + date;
+                DirectoryInfo folder = Directory.CreateDirectory(newFolder);
+
+                foreach (FileInfo file in folder.GetFiles())
+                {
+                    file.Delete();
+                }
+
+                string[] filesToCopy = Directory.GetFiles(sourcePath, "*" + date + "*");
+
+                foreach (string fileToCopy in filesToCopy)
+                {
+                    string existingPath = Path.GetFullPath(fileToCopy);
+                    string newPath = targetPath + @"\" + date + @"\" + Path.GetFileName(fileToCopy);
+                    File.Copy(existingPath, newPath);
+                }
+            }
+        }
+
+        private void B14_FindEmpthyFolders_Click(object sender, EventArgs e)
+        {
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Test0_20180320\2) Täglicher Betrieb - Sorted";
+
+            string[] folders = Directory.GetDirectories(sourcePath);
+            foreach (string folder in folders)
+            {
+                string[] files = Directory.GetFiles(folder);
+
+                if (files.Length == 0)
+                {
+                    MessageBox.Show("Empthy folder " + folder);
+                }
+            }
+
+        }
+
+        private void SetMinDateAndMaxDate(string[] allFilesPaths)
+        {
+            this.MaxDate = DateTime.MinValue;
+            this.MinDate = DateTime.MaxValue;
+
+            foreach (string file in allFilesPaths)
+            {
+                DateTime date = GetDateFromDekaFilePath(file);
+
+                if (MaxDate < date)
+                {
+                    MaxDate = date;
+                }
+                if (MinDate > date)
+                {
+                    MinDate = date;
                 }
             }
         }
@@ -384,7 +697,7 @@ namespace CsvAndDb
 
         private void B9_CheckIfAllFileAreThere_Click(object sender, EventArgs e)
         {
-            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Prod";
+            string sourcePath = @"C:\Users\daniel.cojocaru\Desktop\Deka\Daten\Deka Produktiv\2) Täglicher Betrieb";
             List<string> names = new List<string>() {"ASD", "FSD", "FTK", "ALD", "LOT", "DIV", "MCH", "WAER", "NAH", "TAD" };
 
             List<string> files = Directory.GetFiles(sourcePath).ToList();
@@ -392,12 +705,7 @@ namespace CsvAndDb
 
             foreach (var file in files)
             {
-                string firstSplit = file.Split(new string[] { ".txt" }, StringSplitOptions.None)[0];
-                string[] secondSplitArray = firstSplit.Split('_');
-                string secondSplit = secondSplitArray[secondSplitArray.Length - 1];
-                string dateAsString = secondSplit.Substring(0, 8);
-                DateTime date = DateTime.ParseExact(dateAsString, "yyyyMMdd", CultureInfo.InvariantCulture);
-
+                DateTime date = GetDateFromDekaFilePath(file);
                 dates.Add(date);
             }
 
@@ -423,7 +731,7 @@ namespace CsvAndDb
 
             }
 
-            bool allFilesAreThere = missingFiles.Length == 0;
+            bool allFilesAreThere = missingFiles.Length != 0;
 
         }
 
@@ -449,8 +757,8 @@ namespace CsvAndDb
         {
             string filePath = @"C:\Projects\Git\Deka\Src\DEKADWH\labs.DEKA.CumCum.Application\bin\Debug\labs.DEKA.CumCum.Application.exe";
 
-            DateTime start = DateTime.ParseExact("20180221", dateFormat, CultureInfo.InvariantCulture);
-            DateTime end = DateTime.ParseExact("20180226", dateFormat, CultureInfo.InvariantCulture);
+            DateTime start = DateTime.ParseExact("20180120", dateFormat, CultureInfo.InvariantCulture);
+            DateTime end = DateTime.ParseExact("20180314", dateFormat, CultureInfo.InvariantCulture);
 
             List<Time> days = Repo.GetWorkingDaysBetween(start, end);
 
@@ -606,5 +914,7 @@ namespace CsvAndDb
 
 
         }
+
+        
     }
 }

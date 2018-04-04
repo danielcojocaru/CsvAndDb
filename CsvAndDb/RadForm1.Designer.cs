@@ -41,6 +41,11 @@
             this.radButton11 = new Telerik.WinControls.UI.RadButton();
             this.radButton12 = new Telerik.WinControls.UI.RadButton();
             this.radButton13 = new Telerik.WinControls.UI.RadButton();
+            this.radButton14 = new Telerik.WinControls.UI.RadButton();
+            this.radButton15 = new Telerik.WinControls.UI.RadButton();
+            this.radButton16 = new Telerik.WinControls.UI.RadButton();
+            this.radButton17 = new Telerik.WinControls.UI.RadButton();
+            this.radButton18 = new Telerik.WinControls.UI.RadButton();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton3)).BeginInit();
@@ -54,6 +59,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.radButton11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,7 +91,7 @@
             this.radButton3.Name = "radButton3";
             this.radButton3.Size = new System.Drawing.Size(204, 24);
             this.radButton3.TabIndex = 2;
-            this.radButton3.Text = "3) Find value in column in files";
+            this.radButton3.Text = "3) Find values in column in files";
             this.radButton3.Click += new System.EventHandler(this.B3_FindValueInFiles_Click);
             // 
             // radButton4
@@ -109,7 +119,7 @@
             this.radButton6.Size = new System.Drawing.Size(204, 24);
             this.radButton6.TabIndex = 5;
             this.radButton6.Text = "6) Find value and delete";
-            this.radButton6.Click += new System.EventHandler(this.B6_FindValuesAndDelete_Click);
+            this.radButton6.Click += new System.EventHandler(this.B7Prime_DeleteColumnsAfterIndex_Click);
             // 
             // radButton7
             // 
@@ -174,11 +184,61 @@
             this.radButton13.Text = "13) Speed test";
             this.radButton13.Click += new System.EventHandler(this.radButton13_Click);
             // 
+            // radButton14
+            // 
+            this.radButton14.Location = new System.Drawing.Point(222, 193);
+            this.radButton14.Name = "radButton14";
+            this.radButton14.Size = new System.Drawing.Size(204, 24);
+            this.radButton14.TabIndex = 13;
+            this.radButton14.Text = "7\') Delete columns after index";
+            this.radButton14.Click += new System.EventHandler(this.B7Prime_DeleteColumnsAfterIndex_Click);
+            // 
+            // radButton15
+            // 
+            this.radButton15.Location = new System.Drawing.Point(222, 253);
+            this.radButton15.Name = "radButton15";
+            this.radButton15.Size = new System.Drawing.Size(204, 24);
+            this.radButton15.TabIndex = 14;
+            this.radButton15.Text = "9\') Sort files by date";
+            this.radButton15.Click += new System.EventHandler(this.B9Prime_SortFilesByDate_Click);
+            // 
+            // radButton16
+            // 
+            this.radButton16.Location = new System.Drawing.Point(222, 163);
+            this.radButton16.Name = "radButton16";
+            this.radButton16.Size = new System.Drawing.Size(204, 24);
+            this.radButton16.TabIndex = 15;
+            this.radButton16.Text = "14) Find empthy folders";
+            this.radButton16.Click += new System.EventHandler(this.B14_FindEmpthyFolders_Click);
+            // 
+            // radButton17
+            // 
+            this.radButton17.Location = new System.Drawing.Point(222, 133);
+            this.radButton17.Name = "radButton17";
+            this.radButton17.Size = new System.Drawing.Size(204, 24);
+            this.radButton17.TabIndex = 16;
+            this.radButton17.Text = "15) Search Rückwirkende Änderungen";
+            this.radButton17.Click += new System.EventHandler(this.B15_SearchRueckwirkendeAenderungen_Click);
+            // 
+            // radButton18
+            // 
+            this.radButton18.Location = new System.Drawing.Point(225, 103);
+            this.radButton18.Name = "radButton18";
+            this.radButton18.Size = new System.Drawing.Size(204, 24);
+            this.radButton18.TabIndex = 17;
+            this.radButton18.Text = "16) Check column names in files";
+            this.radButton18.Click += new System.EventHandler(this.B16_CheckColumnNamesInFiles_Click);
+            // 
             // RadForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 495);
+            this.ClientSize = new System.Drawing.Size(561, 495);
+            this.Controls.Add(this.radButton18);
+            this.Controls.Add(this.radButton17);
+            this.Controls.Add(this.radButton16);
+            this.Controls.Add(this.radButton15);
+            this.Controls.Add(this.radButton14);
             this.Controls.Add(this.radButton13);
             this.Controls.Add(this.radButton12);
             this.Controls.Add(this.radButton11);
@@ -211,6 +271,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.radButton11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radButton18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
 
@@ -231,5 +296,10 @@
         private Telerik.WinControls.UI.RadButton radButton11;
         private Telerik.WinControls.UI.RadButton radButton12;
         private Telerik.WinControls.UI.RadButton radButton13;
+        private Telerik.WinControls.UI.RadButton radButton14;
+        private Telerik.WinControls.UI.RadButton radButton15;
+        private Telerik.WinControls.UI.RadButton radButton16;
+        private Telerik.WinControls.UI.RadButton radButton17;
+        private Telerik.WinControls.UI.RadButton radButton18;
     }
 }
